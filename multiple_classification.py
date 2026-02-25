@@ -104,7 +104,7 @@ if(selected == 'Loan'):
           
     st.success(loan_prediction)
 
-if(selected == 'bmi'):
+if(selected == 'BMI'):
     st.title('bmi Classification')
     
     person_age = st.text_input('person_age')
@@ -177,6 +177,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
