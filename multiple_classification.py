@@ -115,23 +115,19 @@ if(selected == 'BMI'):
 
     if st.button('Predict'):
 
-        # แปลงเพศเป็นตัวเลข
         gender_value = 1 if gender == 'Male' else 0
-        
-        # คำนวณ BMI ก่อน (ถ้า model รับค่า BMI)
-        height_m = float(height) / 100
-        bmi_value = float(weight) / (height_m ** 2)
 
         bmi_prediction = bmi_model.predict([
-            [gender_value, bmi_value]
+            [
+                gender_value,
+                float(height),
+                float(weight)
+            ]
         ])
 
-        if bmi_prediction[0] == 0:
-            bmi_prediction = 'Normal'
-        else:
-            bmi_prediction = 'Overweight'
+        bmi_prediction = bmi_prediction[0]
 
-    st.success(bmi_prediction)
+        st.success(f'Predicted BMI Index: {bmi_prediction}')
     
 if(selected == 'Riding'):
     st.title('Riding Mower Classification')
@@ -156,6 +152,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
