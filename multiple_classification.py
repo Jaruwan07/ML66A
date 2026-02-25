@@ -105,41 +105,32 @@ if(selected == 'Loan'):
     st.success(loan_prediction)
 
 if(selected == 'BMI'):
-    st.title('bmi Classification')
-    
+    st.title('BMI Classification')
+
     gender = st.selectbox('Gender', ['Male', 'Female'])
     height = st.text_input('Height (cm)')
     weight = st.text_input('Weight (kg)')
-    
+
     bmi_prediction = ''
-    
+
     if st.button('Predict'):
-        bmi_prediction = BMI_model.predict([
-            [
-                float(person_age),
-                gender_map[person_gender],
-                education_map[person_education],
-                float(person_income),
-                float(person_emp_exp),
-                home_map[person_home_ownership],
-                float(loan_amnt),
-                intent_map[loan_intent],
-                float(loan_int_rate),
-                float(loan_percent_income),
-                float(cb_person_cred_hist_length),
-                float(credit_score),
-                default_map[previous_bmi_defaults_on_file]
-            ]
-        ])
+
+        # แปลงเพศเป็นตัวเลข
+        gender_value = 1 if gender == 'Male' else 0
         
-        if (bmi_prediction[0] == 0):
-            
-          bmi_prediction = 'Not Accept'
-          
+        # คำนวณ BMI ก่อน (ถ้า model รับค่า BMI)
+        height_m = float(height) / 100
+        bmi_value = float(weight) / (height_m ** 2)
+
+        bmi_prediction = bmi_model.predict([
+            [gender_value, bmi_value]
+        ])
+
+        if bmi_prediction[0] == 0:
+            bmi_prediction = 'Normal'
         else:
-            
-          bmi_prediction = 'Accept'
-          
+            bmi_prediction = 'Overweight'
+
     st.success(bmi_prediction)
     
 if(selected == 'Riding'):
@@ -165,6 +156,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
