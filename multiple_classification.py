@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Feb 18 16:03:32 2026
+Created on Wed Feb 18 16:03:42 2026
 
 @author: Lab
 """
@@ -12,17 +12,17 @@ from streamlit_option_menu import option_menu
 riding_model = pickle.load(open("C:/Users/Lab/Desktop/ML/Riding_model.sav",'rb'))
 loan_model = pickle.load(open("C:/Users/Lab/Desktop/ML/loan_model.sav",'rb'))
 
+
 with st.sidebar:
     selected = option_menu(
-        'classification',['Loan','Riding']
+        'Classification',['Loan','Riding']
         )
-    
-    
+
 gender_map = {
     'Male':1,
     'Female':0
     }
- 
+
 education_map = {
     'Associate': 0,
     'Bachelor': 1,
@@ -30,14 +30,14 @@ education_map = {
     'High School': 3,
     'Master': 4
 }
- 
+
 home_map = {
     'MORTGAGE': 0,
     'OTHER': 1,
     'OWN': 2,
     'RENT': 3
 }
- 
+
 intent_map = {
     'DEBTCONSOLIDATION': 0,
     'EDUCATION': 1,
@@ -46,18 +46,21 @@ intent_map = {
     'PERSONAL': 4,
     'VENTURE': 5
 }
- 
+
 default_map = {
     'No': 0,
     'Yes': 1
 }
-    
+
+
+
 if(selected == 'Loan'):
-    st.title('loan Classification')
+    st.title('Loan Classification')
+    
     person_age = st.text_input('person_age')
     person_gender = st.selectbox('person_gender', gender_map)
     person_education = st.selectbox('person_education', education_map)
-    person_income = st.text_input('person_income')
+    person_income = st.text_input('person_income') 
     person_emp_exp = st.text_input('person_emp_exp')
     person_home_ownership = st.selectbox('person_home_ownership', home_map)
     loan_amnt = st.text_input('loan_amnt')
@@ -66,8 +69,10 @@ if(selected == 'Loan'):
     loan_percent_income = st.text_input('loan_percent_income')
     cb_person_cred_hist_length = st.text_input('cb_person_cred_hist_length')
     credit_score = st.text_input('credit_score')
-    previous_loan_defaults_on_file = st.selectbox('previous_loan_defaults_on_file',default_map)
-
+    previous_loan_defaults_on_file = st.selectbox(
+        'previous_loan_defaults_on_file',
+        default_map)
+    
     loan_prediction = ''
     
     if st.button('Predict'):
@@ -89,17 +94,22 @@ if(selected == 'Loan'):
             ]
         ])
         
-        if(loan_prediction[0] == 0):
-          loan_prediction = ('Non Owner')
+        if (loan_prediction[0] == 0):
+            
+          loan_prediction = 'Not Accept'
+          
         else:
-          loan_prediction = ('Owner')
+            
+          loan_prediction = 'Accept'
+          
     st.success(loan_prediction)
-    
+
 if(selected == 'Riding'):
     st.title('Riding Mower Classification')
+    
     Income = st.text_input('รายได้')
     LotSize = st.text_input('พื้นที่บ้าน')
-
+    
     Riding_prediction = ''
     
     if st.button('Predict'):
@@ -107,8 +117,12 @@ if(selected == 'Riding'):
             [float(Income),float(LotSize)]
         ])
         
-        if(Riding_prediction[0] == 0):
-          Riding_prediction = ('Non Owner')
+        if (Riding_prediction[0] == 0):
+            
+          Riding_prediction = 'Non Owner'
+          
         else:
-          Riding_prediction = ('Owner')
+            
+          Riding_prediction = 'Owner'
+          
     st.success(Riding_prediction)
