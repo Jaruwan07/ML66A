@@ -104,8 +104,8 @@ if(selected == 'Loan'):
           
     st.success(loan_prediction)
 
-if(selected == 'Loan'):
-    st.title('Loan Classification')
+if(selected == 'bmi'):
+    st.title('bmi Classification')
     
     person_age = st.text_input('person_age')
     person_gender = st.selectbox('person_gender', gender_map)
@@ -123,10 +123,10 @@ if(selected == 'Loan'):
         'previous_loan_defaults_on_file',
         default_map)
     
-    loan_prediction = ''
+    bmi_prediction = ''
     
     if st.button('Predict'):
-        loan_prediction = loan_model.predict([
+        bmi_prediction = BMI_model.predict([
             [
                 float(person_age),
                 gender_map[person_gender],
@@ -140,19 +140,19 @@ if(selected == 'Loan'):
                 float(loan_percent_income),
                 float(cb_person_cred_hist_length),
                 float(credit_score),
-                default_map[previous_loan_defaults_on_file]
+                default_map[previous_bmi_defaults_on_file]
             ]
         ])
         
-        if (loan_prediction[0] == 0):
+        if (bmi_prediction[0] == 0):
             
-          loan_prediction = 'Not Accept'
+          bmi_prediction = 'Not Accept'
           
         else:
             
-          loan_prediction = 'Accept'
+          bmi_prediction = 'Accept'
           
-    st.success(loan_prediction)
+    st.success(bmi_prediction)
     
 if(selected == 'Riding'):
     st.title('Riding Mower Classification')
@@ -177,6 +177,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
